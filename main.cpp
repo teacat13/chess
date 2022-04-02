@@ -132,6 +132,7 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
     0,
     0,
     0,
+    0,
     32,
     0,
     0,
@@ -152,6 +153,7 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
     wglMakeCurrent(GetDC(hWnd), wglCreateContext(GetDC(hWnd)));
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 
     return hWnd;
@@ -561,7 +563,7 @@ std::shared_ptr<default_piece> make_piece(char c) {
     }
 }
 
-
+void init_chessboard () {
     static constexpr char setup[8][9] = { // 9 = 8 + 1; 1 for \0
  /* 8 */"rhbqkbhr", // Upper - white; Lower - black
  /* 7 */"gppppppg", // K - King
@@ -645,6 +647,7 @@ struct square_t
 };
 
 square_t getStartCoord() 
+{
     square_t res;
 
     auto [w, h] = getWindowWH();
@@ -778,7 +781,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
         case WM_SIZE:
         {
-            glViewport(0, 0, LOWORD(lParam), HIWORD(lParam)); 
+            glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));  
+        }
         break;
         case WM_PAINT: 
         {
