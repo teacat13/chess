@@ -566,12 +566,12 @@ std::shared_ptr<default_piece> make_piece(char c) {
 void init_chessboard () {
     static constexpr char setup[8][9] = { // 9 = 8 + 1; 1 for \0
  /* 8 */"rhbqkbhr", // Upper - white; Lower - black
- /* 7 */"gppppppg", // K - King
+ /* 7 */"pppppppp", // K - King
  /* 6 */"        ", // Q - Queen
  /* 5 */"        ", // R - Rook
  /* 4 */"        ", // B - Bishop
  /* 3 */"        ", // H - Knight (horse)
- /* 2 */"GPPPPPPG", // P - Pawn
+ /* 2 */"PPPPPPPP", // P - Pawn
  /* 1 */"RHBQKBHR"  // D - Default
     };/* abcdefgh *///   - Empty (space)
     
