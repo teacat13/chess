@@ -82,14 +82,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
 {
-    WCHAR szTitle[MAX_LOADSTRING];					// Текст строки заголовка
-    WCHAR szWindowClass[MAX_LOADSTRING];			// имя класса главного окна
+    WCHAR szTitle[MAX_LOADSTRING];				
+    WCHAR szWindowClass[MAX_LOADSTRING];			
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_PROJECT1, szWindowClass, MAX_LOADSTRING);
 
     WNDCLASSEXW wcexw =
     {
-        sizeof(WNDCLASSEXW), // порядок не был нарушен  сек  блин табы всё испортили)
+        sizeof(WNDCLASSEXW), 
         CS_HREDRAW | CS_VREDRAW | CS_NOCLOSE,
         WndProc,
         0,
@@ -97,30 +97,22 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
         hInstance,
         LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_PROJECT1)),
         LoadCursorW(NULL, IDC_ARROW),
-        0, //CreateSolidBrush(RGB(snake1_OpenGL_background_color_red, snake1_OpenGL_background_color_green, snake1_OpenGL_background_color_blue)),
-        0, //MAKEINTRESOURCEW(IDC_PROJECT1),
+        0, 
+        0, 
         szWindowClass,
-        LoadIconW(wcexw.hInstance, MAKEINTRESOURCEW(IDI_SMALL)) // у меня локально больше сочетаний работает, тут кст они тоже работают, но эффект другой
+        LoadIconW(wcexw.hInstance, MAKEINTRESOURCEW(IDI_SMALL)) 
     };
     
     RegisterClassExW(&wcexw);
    
-    HWND hWnd;  //wcerr? смотри  ща
-    if (!(hWnd = CreateWindowExW(0L, szWindowClass, szTitle, /*WS_POPUP*/ WS_OVERLAPPEDWINDOW, 0, 0, 1366, 768, NULL, NULL, hInstance, NULL)))
+    HWND hWnd;  
+    if (!(hWnd = CreateWindowExW(0L, szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, 0, 0, 1366, 768, NULL, NULL, hInstance, NULL)))
     {
         std::wcerr << L"CreateWindowExW error" << std::endl;
         exit(0);
     }
     ShowWindow(hWnd, nCmdShow);
-    *hAccelTable = LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDC_PROJECT1)); //изначально кролики были змейкой? да)) понял))
-
-
-
-
-
-
-
-
+    *hAccelTable = LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDC_PROJECT1)); 
 
     PIXELFORMATDESCRIPTOR pfd = {
     sizeof(PIXELFORMATDESCRIPTOR),
@@ -128,14 +120,13 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
     PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
     PFD_TYPE_RGBA,
     24,
-    0, // ))), ох уж ета регулярная магия
+    0, 
     0,
     0,
     0,
     0,
     0,
-    0, // зачем ВСЕ табы в пробелы? табы при удалении слева хрен пойми как перемещаются     и ширина разная в разных редакторах    тут у тебя 4, ты гдето 4 пробела ставишь, а в дугом редакторе табы меняются, а пробелы - нет
-    0,
+    0, 
     0,
     0,
     0,
@@ -144,7 +135,7 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
     32,
     0,
     0,
-    0, //понял, примерно так и представлял но я думал  я ещё не закончил
+    0, 
     0,
     0,
     0,
@@ -159,24 +150,9 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
     }
 
     wglMakeCurrent(GetDC(hWnd), wglCreateContext(GetDC(hWnd)));
-
-    // glEnable(GL_TEXTURE_2D);
     glMatrixMode(GL_PROJECTION);
-    // glOrtho(-4, 4, -4, 4, -1, 1);
-    // glOrtho(0, 48 * 15, 0, 48 * 15, -1, 1);
-    // а как размер окна теперь менять?
-    // glViewport(0, 0, 640, 480); // почему ты использовал 48*15?   текстура кралика 48*48    кроликов 15*15 понял принял, мб окно квадратное делать?    логично)  а если пользователь на весь экран сделает? тоже логично!)   а чё делать то?  нуууу, либо делать рамки,либо растягивать, но наверное рамки будут выглядеть лучше, хз    давай попробуем сделать примерно также го   я тогда оставляю ++ (5:30 утра) дадад, я вижу вк
     glLoadIdentity();
-    // glOrtho(0, 640, 480, 0, -1, 1); // я не делаю srand()!!!   а надо делать!
-    glMatrixMode(GL_MODELVIEW); // нет, всмысле я в более философском определении ахааха, нам же надо чтобы окно масштабировалось   допустим   тоогда   как узнать разрешение?  я так понял, в таком слечае удобно абстрагироваться от пикселей и сказать что пусть ширина это от -1 до 1 и так же высота  но тут уже настроено на пиксели   хм, надо перенастроить? ща посмотрим   мб так ахаха
-
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //0 - это черный, да? да. мне тут обновение биоса прилетелоо)) ахаха)
-
-
-    // чёт не помню где именно закончили, но думаю это не важно    на фпсах закончили ,  всм на какой строке    
-
-
-
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 
     return hWnd;
 }
@@ -184,11 +160,6 @@ HWND createWindow(HINSTANCE hInstance, int nCmdShow, HACCEL *hAccelTable)
 void LoadTexture(WORD IDB, GLuint *pTexture)
 {
 	HDC hdc = GetDC(hWnd);
-
-	//rabbitDC = CreateCompatibleDC(hdc);
-	//HBITMAP tmpRabbitBitmap = LoadBitmapW(hInst, MAKEINTRESOURCEW(IDB_RABBIT));
-	//prevRabbitBitmap = SelectObject(rabbitDC, tmpRabbitBitmap);
-
 	
 	HBITMAP tmpRabbitBitmap = LoadBitmapW(hInst, MAKEINTRESOURCEW(IDB));
 	SIZE tmpRabbitBitmap_size = {256, 256};
@@ -205,7 +176,7 @@ void LoadTexture(WORD IDB, GLuint *pTexture)
 		.bmiHeader = {
 			.biSize = sizeof(bitmap_info.bmiHeader),
 			.biWidth = tmpRabbitBitmap_size.cx,
-			.biHeight = tmpRabbitBitmap_size.cy, // без отрицания? сделать своей программой текстуру и разобраться
+			.biHeight = tmpRabbitBitmap_size.cy, 
 			.biPlanes = 1,
 			.biBitCount = 32,
 			.biCompression = BI_RGB,
@@ -219,34 +190,13 @@ void LoadTexture(WORD IDB, GLuint *pTexture)
 		exit(-2);
 	}
 	DeleteObject(tmpRabbitBitmap);
-	// for (size_t i = 0; i < bitmap_buffer_size; ++i)
-	// {
-	// 	((unsigned char *)bitmap_buffer)[i] = i % 4 == 3 ? rand() : ((unsigned char *)bitmap_buffer)[i];
-	// }
-	// for (size_t i = 0; i < bitmap_buffer_size / 4; ++i)
-	// {
-	// 	bitmap_buffer[i] = i % 4 == 1 ? rand() : bitmap_buffer[i];
-	// }
-	// for (size_t i = 3; i < bitmap_buffer_size; i += 4)
-	// {
-	// 	((unsigned char *)bitmap_buffer)[i] = 127;
-	// }
+
 
 	glGenTextures(1, pTexture);
-	// wprintf(L"rabbit_texture = %d\n", *GetAnimalsTexturep(what));
 	glBindTexture(GL_TEXTURE_2D, *pTexture);
 
-	// glPixelStorei(GL_UNPACK_SWAP_BYTES, GL_FALSE); // ???
-	// glPixelStorei(GL_UNPACK_LSB_FIRST,  GL_TRUE);  //
-	// glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);        //
-	// glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);       //
-	// glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);         //
-	// glPixelStorei(GL_UNPACK_ALIGNMENT, 1);         //
-	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F); 
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
 
 	glTexImage2D(
 		GL_TEXTURE_2D,
@@ -259,24 +209,17 @@ void LoadTexture(WORD IDB, GLuint *pTexture)
 		GL_UNSIGNED_BYTE,
 		bitmap_buffer
 	);
-	free(bitmap_buffer); // или opengl использует этот буфер и это нельзя освобождать?
+	free(bitmap_buffer); 
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-
-	// wolfMDC = CreateCompatibleDC(hdc);
-	// prevWolfMBitmap = SelectObject(wolfMDC, LoadBitmapW(hInst, MAKEINTRESOURCEW(IDB_WOLFM)));
-
-	// wolfWDC = CreateCompatibleDC(hdc);
-	// prevWolfWBitmap = SelectObject(wolfWDC, LoadBitmapW(hInst, MAKEINTRESOURCEW(IDB_WOLFW)));
 
 	ReleaseDC(hWnd, hdc);
 
 }
 
 enum direction {
-    RIGHT, UP, LEFT, DOWN // white goes to global_top
-} global_top = UP; // where line y = 8 for viewer
+    RIGHT, UP, LEFT, DOWN 
+} global_top = UP; 
 
 enum piece_color {
     WHITE = 0, BLACK, NUMBER_OF_COLORS
@@ -286,7 +229,7 @@ struct square_t;
 struct cell;
 struct default_piece;
 
-extern std::array<std::array<cell, 8>, 8> chessboard; // [0][0] is 1A
+extern std::array<std::array<cell, 8>, 8> chessboard; 
 
 std::shared_ptr<default_piece> selected_piece;
 piece_color now_playing = WHITE;
@@ -618,8 +561,7 @@ std::shared_ptr<default_piece> make_piece(char c) {
     }
 }
 
-// мб сделать потом редактор карт чтобы доска была любой формы и с любой расстановкой любого количества фигур и сколько угодно цветов. 4 возможных направления у пешек. и конечно мультиплеер =)
-void init_chessboard() {
+
     static constexpr char setup[8][9] = { // 9 = 8 + 1; 1 for \0
  /* 8 */"rhbqkbhr", // Upper - white; Lower - black
  /* 7 */"gppppppg", // K - King
@@ -647,10 +589,8 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int
     _setmode(_fileno(stderr), _O_WTEXT);
 
 
-    // std::wcout << L"123" << std::endl;
-
     HACCEL hAccelTable;
-    hWnd = createWindow(hInstance, nCmdShow, &hAccelTable); // я тут за хорошую архитектуру топил, а щас хочу всё глобальными переменными облепить хахах ахахахах
+    hWnd = createWindow(hInstance, nCmdShow, &hAccelTable); 
     hInst = hInstance;
 
     LoadTexture(IDB_WOLFW, &wolfw_texture);
@@ -674,16 +614,14 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int
     init_chessboard();
     
 
-    // SetTimer(hWnd, 0, 1000 / 90, NULL);  // надо будет ещё всё это вынести в функцию     я прост помню что чётко понимал что код текстур щас пойдёт где-то там аааа
     for (MSG msg = {0}; msg.message != WM_QUIT; )
     {
-        // std::cout << 1 << std::endl;
-        while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) // я ещё так не делал, но можно попробовать чтобы фпс мог проседать, а не по жёсткому таймеру 60 кадров, а то непонятно что происходит когда комп не вывозит понял, го   сначала как было, чтобы проконтролировать что других ошибок нет
-        {             //get^ ожидает, а peek если нету сообщения идёт дальше, понял, интересно    ща сделаю тупо но так проще
+        while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) 
+        {             
             if (!TranslateAcceleratorW(msg.hwnd, hAccelTable, &msg))
             {
                 TranslateMessage(&msg);
-                DispatchMessageW(&msg); // на сайте хорошо сделано   надо так же
+                DispatchMessageW(&msg); 
             }
         }
         SendMessageW(hWnd, WM_TIMER, 0, 0);
@@ -695,50 +633,39 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int
 }
 
 icoord getWindowWH() {
-    RECT rect; // оставим? го, по фану ахаха XD    потом если что regex_replace()
+    RECT rect; 
     GetClientRect(hWnd, &rect);
-    // std::wcout << rect.right - rect.left << ' ' << rect.bottom - rect.top << std::endl;
+   
     return {rect.right - rect.left, rect.bottom - rect.top};
 }
 
 struct square_t
 {
-    double x, y, w, h; // а как назвать структуру???????   колхоз получчается  size не подойдет?  принято кратко именовать   hWnd = handle [of?]  wwindow    и тд   мы же не просто sz будем писать, а имяструктуры.sz   понял) можно sz тогда, почему колхоз?
+    double x, y, w, h;
 };
-// возвращает верхний левый угол поля в координатах OpenGL, при итерации высоту надо вычитать из координаты
-square_t getStartCoord() // std::pair<coord_t, double>   ахах пахпа норм   тогда будут .first & .second   а это не хорошо   а блин точно  во, square_t может обозначаться одним углом и размером стороны, назову square_t
-{
+
+square_t getStartCoord() 
     square_t res;
-    // тут нам нужно актуальное разрешение всё таки
-    // ну да
+
     auto [w, h] = getWindowWH();
 
-    // ещё немного длинного кода
     if (w > h)
     {
         res.h = 2.0 / 8;
         res.w = 2.0 / 8 / ((double)w / h); 
-        // std::wcout << res.w << std::endl;
+
     }
     else
     {
         res.h = 2.0 / 8 / ((double)h / w);
         res.w = 2.0 / 8;
-        // std::wcout << res.h << std::endl;
+ 
     }
     
-    // погнали вычислять координаты угла гого   тут же легко можно получить размер клетки, теперь не хочется на две функции это разбивать   а как тогда структуру сделать?
-
-
-    // sz проще, начнём с него
-    // res.sz = std::min(w, h) / 8;
-
-    // так, а теперь координаты
-    // давай возьмём нижний левый угол    давай по-тупому  длинно
 
     if (w > h)
     {
-        res.x = -1.0 + (2 - res.w * 8) / 2; // ты тут? да   по идее ошибка тут, но  в то же время кажется что всё правильно ааа, хм
+        res.x = -1.0 + (2 - res.w * 8) / 2; 
         res.y = 1.0;
     }
     else
@@ -748,7 +675,7 @@ square_t getStartCoord() // std::pair<coord_t, double>   ахах пахпа н�
     }
 
 
-    return res;  // разрешение есть   но надо дать пользователю возможность ресайзить   да? дадада   вооот шиик   спакуха, ещё не заработало
+    return res;  
 }
 
 icoord d2icoord(dcoord dc) {
@@ -756,7 +683,6 @@ icoord d2icoord(dcoord dc) {
     return (dc / dcoord{-x, y} + 1) * 4;
 }
 
-// в пикселях в cursor, <dcoord>() - в координатах OpenGL, <icoord>() - в координатах chessboard[y][x]
 template <typename T>
 T getCursorCoord();
 
@@ -770,24 +696,23 @@ icoord getCursorCoord<icoord>() {
     return d2icoord(getCursorCoord<dcoord>());
 }
 
-// xy указывают на нижний левый угол
+
 void default_piece::draw(square_t place) {
-    // std::wcout << L"cell::draw()" << piece->texture() << std::endl;
-    glColor3d(1.0, 1.0, 1.0); // текстура не рисуется если цвет чёрный!!!
+    
+    glColor3d(1.0, 1.0, 1.0); 
     glBindTexture(GL_TEXTURE_2D, texture());
     glBegin(GL_QUADS);
-    // glTexCoord2i() - нижний левый угол в (0, 0), притом что верхний правый в (1, 1)
     glTexCoord2i(0, 0); glVertex2d(place.x, place.y);
     glTexCoord2i(1, 0); glVertex2d(place.x + place.w, place.y);
     glTexCoord2i(1, 1); glVertex2d(place.x + place.w, place.y + place.h);
     glTexCoord2i(0, 1); glVertex2d(place.x, place.y + place.h);
     glEnd();
-    glBindTexture(GL_TEXTURE_2D, 0); // сбрасывать текстуру обязательно, иначе не работает!!!
+    glBindTexture(GL_TEXTURE_2D, 0); 
 }
 
-// при radius = 0.5 круг вписывается в клетку (при верных координатах)
+
 void draw_circle(dcoord center, double radius) {
-    // GL_LINE_LOOP или для закрашенного GL_TRIANGLE_FAN с первой точкой в центре
+
     auto [x, y, w, h] = getStartCoord();
     glBegin(GL_TRIANGLE_FAN);
     glVertex2d(center.x(), center.y());
@@ -799,33 +724,23 @@ void draw_circle(dcoord center, double radius) {
 
 void draw()
 {
-    //го гуглить как закрашивать полигоны      либо можно взять код змейки     не прокатил square_t     я перепуталь компилятор   я забыл, что это на вижле у меня так работало ((((((((((((
-    //хм, а что будет лучше?   щас, он на выключенном компе, сек оке    давай    ты в го умеешь?  там где белые/черные фишки?   да  50/50 ну давай попробуем    да я думаю комп уже загрузился)) ладно))   попробуем  потом
-    // ддадад, кст, я понел о чем ты, мои кнопочки по такой же схеме работают ахахах  ага
-    //glRectd(0.3, 0.3, 0.5, 0.5);  // ну вот короче    работает    теперь циклом ?   а какое у нас разрешение?    у нас его нет    офигеть как всё быстро идёт ахахаах
-    // x+step должно быть равно y+step??    1) нет, 2) чтобы потом удобно рисовать фигуры, надо чтобы для них тоже этот код работал (для координат)
-    // так что я думаю надо сделать функцию которая возвращает размер клетки и угол угловой клетки, а дальше легко   понял
+   
     auto [x, y, w, h] = getStartCoord();
-    // std::wcout << x << L' ' << y << L' ' << w << L' ' << h << std::endl;
+
     bool flag = false;
-    // double step = sz; //2.0 / 8;
+
     for (int iy = 0; iy < 8; ++iy)
     {
         for (int ix = 0; ix < 8; ++ix)
-    // for (; y <= 1.0; y += h)
-    // {
-    //     for (double tmpx = x; tmpx <= 1.0; tmpx += w)
+ 
         {
-            // закрашиваем клетки чёрным или белым
+           
             if (flag ^= 1) glColor3d(1.0, 1.0, 1.0);
             else glColor3d(0.0, 0.0, 0.0);
-            // glRectd(tmpx + w, y + h, tmpx, y);
             square_t place{x + w * ix, y - h * (iy + 1), w, h};
             glRectd(place.x, place.y, place.x + w, place.y + h);
-            // рисуем фигуры
             if (chessboard[7 - iy][ix].piece)
                 chessboard[7 - iy][ix].piece->draw(place);
-            // рисуем зелёные кружочки
             if (selected_piece && selected_piece->is_can_step_here()[7 - iy][ix]) {
                 glColor3d(0.0, 0.5, 0.0);
                 draw_circle({place.x + place.w / 2, place.y + place.h / 2}, 0.125);
@@ -840,80 +755,39 @@ void draw()
     }
 }
 
-
-
-
-
-
-
-
-
-
-//
-
-
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    //  hdc;
-    
-    // static HDC rabbitDC;
-    // static HDC wolfMDC;
-    // static HDC wolfWDC;
-    
-    // static HBITMAP prevRabbitBitmap;
-    // static HBITMAP prevWolfMBitmap;
-    // static HBITMAP prevWolfWBitmap;
-
-
 
     switch (message)
     {
         case WM_MOUSEMOVE:
         {
-        	cursor = {LOWORD(lParam), HIWORD(lParam)}; // можно ли узнать координаты мыши функцией ? убрать этот case(получится?) : ???
+        	cursor = {LOWORD(lParam), HIWORD(lParam)}; 
         }
         break;
         case WM_LBUTTONUP:
         {
-        	// wprintf(L"\n%hu %hu\n", cursor.x(), cursor.y());
+        
             icoord ic = getCursorCoord<icoord>();
-        	// wprintf(L"%hu %hu\n", ic.x(), ic.y());
-            // dcoord dc = getCursorCoord<dcoord>();
-        	// wprintf(L"%lf %lf\n\n", dc.x(), dc.y());
-        	// fflush(stdout);
         	try {
                 chessboard.at(ic.y()).at(ic.x()).click(ic);
             } catch (const std::out_of_range &) {
-                // std::wcout << L"out of range" << std::endl;
+                
             }
         }
         break;
         case WM_SIZE:
         {
-            glViewport(0, 0, LOWORD(lParam), HIWORD(lParam)); // скорее всего это не то      а что ето ваще за прекол с низкими и высокими словами ахахах   мы сидим на х86, он первый был 8086 - 16 битный  16 бит - машинное слово   lParam это 4 байта = два слова    поооонял, сложна ахха
-        }
+            glViewport(0, 0, LOWORD(lParam), HIWORD(lParam)); 
         break;
-        case WM_PAINT: // ну короче рисование тут
+        case WM_PAINT: 
         {
             PAINTSTRUCT ps;
-        	HDC hdc = BeginPaint(hWnd, &ps); // он стирает экран перед рисованием?     во первых давай вынесем это в отдельную функцию го
+        	HDC hdc = BeginPaint(hWnd, &ps); 
         	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         	glEnable(GL_TEXTURE_2D);
         	glEnable(GL_BLEND);
         	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-        	// свитчи везде где можно!
-        	// не рисовать зверя, если он уже нарисован в этой клетке
-            
-        	// glBindTexture(GL_TEXTURE_2D, rabbit_texture);
-        	// Paint_animals(RABBIT, I/*, hdc, rabbitDC*/);
-
-        	// glBindTexture(GL_TEXTURE_2D, wolfm_texture);
-        	// Paint_animals(WOLFM, I/*, hdc, wolfMDC*/);
-
-        	// glBindTexture(GL_TEXTURE_2D, wolfw_texture);
-        	// Paint_animals(WOLFW, I/*, hdc, wolfWDC*/);
 
 
             draw();
@@ -923,50 +797,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         	glDisable(GL_TEXTURE_2D);
         	glBindTexture(GL_TEXTURE_2D, 0);
         	glFlush();
-        	SwapBuffers(hdc); //очищаем буфер
+        	SwapBuffers(hdc); 
         	EndPaint(hWnd, &ps);
         }
         break;
-        // case WM_CREATE:
-        // {
-        // 	// wprintf(L"WM_CREATE\n");
-        // 	//SetWindowLongPtrW(hWnd, GWLP_USERDATA, (LONG)((CREATESTRUCTW *)lParam)->lpCreateParams);
-        // }
-        // break;
-        // case WM_KEYDOWN:
-        // {
-        // 	// if (wParam == 0x51) SendMessageW(hWnd, WM_CLOSE, 0, 0); //q
-        // 	switch (wParam)
-        // 	{
-        // 		case 0x51: SendMessageW(hWnd, WM_CLOSE, 0, 0); break;
-        // 		case VK_SPACE: paused ^= 1;
-        // 		default: {}
-        // 	}
-        // }
-        // break;
         case WM_TIMER:
         {
-        	
 
-
-
-        	// SwapBuffers(g_hDC);
             RECT rect;
         	GetClientRect(hWnd, &rect);
-        	InvalidateRect(hWnd, &rect, TRUE); // он стирает экран перед рисованием?
+        	InvalidateRect(hWnd, &rect, TRUE); 
         	UpdateWindow(hWnd);
         }
         break;
         case WM_DESTROY:
         {
-            // DeleteObject(SelectObject(wolfWDC, prevWolfWBitmap));
-            // DeleteDC(wolfWDC);
-
-            // DeleteObject(SelectObject(wolfMDC, prevWolfMBitmap));
-            // DeleteDC(wolfMDC);
-
-            // DeleteObject(SelectObject(rabbitDC, prevRabbitBitmap));
-            // DeleteDC(rabbitDC);
 
             PostQuitMessage(0);
         }
@@ -974,4 +819,4 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         default: return DefWindowProcW(hWnd, message, wParam, lParam);
     }
     return 0;
-} //ох    щас надо аккуратно всё лишнее убрать
+} 
